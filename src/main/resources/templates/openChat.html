@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Chat</title>
+  <style>
+    /* 기본 스타일 */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    #chat-container {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      width: 400px;
+    }
+
+    #message-container {
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    #input-container {
+      display: flex;
+      align-items: center;
+    }
+
+    #message-input {
+      flex-grow: 1;
+      padding: 5px;
+    }
+
+    #send-button {
+      margin-left: 10px;
+      padding: 5px 10px;
+    }
+
+  </style>
+</head>
+<body>
+<div id="chat-container">
+  <div id="message-container">
+    <!-- 메시지가 표시될 영역 -->
+  </div>
+  <div id="input-container">
+    <input type="text" id="message-input" placeholder="메시지를 입력하세요">
+    <button id="send-button">전송</button>
+  </div>
+</div>
+
+<script>
+  // JavaScript 로직은 여기에 추가하세요
+</script>
+</body>
+</html>
