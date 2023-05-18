@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>ToDo List</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
   <style>
     body {
       padding-top: 50px;
@@ -19,20 +21,63 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ToDo List</h1>
-    <form id="todo-form">
-      <div class="form-group">
-        <label for="todo-text">Add ToDo:</label>
-        <input type="text" id="todo-text" class="form-control">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
+<div class="container">
+  <h1>ToDo List</h1>
+  <form id="todo-form">
+    <div class="form-group">
+      <label for="todo-title">Title:</label>
+      <input type="text" id="todo-title" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="todo-text">Text:</label>
+      <textarea id="todo-text" class="form-control"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="commentWriter()">Add</button>
+  </form>
     <ul id="todo-list" class="list-group mt-3">
-      <li><h3>list 1</h3></li>
-      <li><h3>list 2</h3></li>
-      <li><h3>list 3</h3></li>
+      <li th:each="toDoDTO : ${toDoDTOList}">
+        <h3 th:text="${toDoDTO.getTodoTitle()}"></h3>
+        <span th:text="${toDoDTO.getTodoItem()}"></span>
+      </li>
     </ul>
-  </div>
+</div>
 </body>
+<script th:inline="javascript">
+  const commentWriter = () => {
+    const title = $("#todo-title").val();
+    const todoItem = $("#todo-text").val();
+
+    $.ajax({
+      type: "post",
+      url: "/Todo/write",
+      data: {
+        "id" : null,
+        "todoTitle": title,
+        "todoItem": todoItem,
+        "name" : "의문의 사나이"
+      },
+      success: function(res) {
+        console.log("작성 성공", res);
+        // 새로운 할일 목록을 생성하여 추가
+        let newTodoList = $("<ul>").addClass("list-group mt-3");
+
+        for (let i in res) {
+          let listItem = $("<li>").addClass("list-group-item");
+          listItem.append("<h3>" + res[i].todoTitle + "</h3>");
+          listItem.append("<span>" + res[i].todoItem + "</span>");
+          newTodoList.append(listItem); // 새로운 할 일 목록 추가
+        }
+
+        $("#todo-list").html(newTodoList); // 기존의 할 일 목록 대체
+
+        // 입력 필드 초기화
+        $("#todo-title").val('');
+        $("#todo-text").val('');
+      },
+      error : function (res){
+        console.log("요청 실패",res);
+      }
+    });
+  }
+</script>
 </html>

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring_demo.demo.dto.ToDoDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,5 +31,15 @@ public class ToDoEntity {
 
     public ToDoEntity() {
 
+    }
+
+    public static ToDoEntity toToDoEntity(ToDoDTO toDoDTO) {
+        ToDoEntity toDoEntity = new ToDoEntity();
+
+        toDoEntity.setTodoTitle(toDoDTO.getTodoTitle());
+        toDoEntity.setTodoItem(toDoDTO.getTodoItem());
+        toDoEntity.setName("의문의 사나이");
+
+        return toDoEntity;
     }
 }

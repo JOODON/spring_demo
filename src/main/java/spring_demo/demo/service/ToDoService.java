@@ -20,10 +20,18 @@ public class ToDoService {
     public List<ToDoDTO> toDoDTOList(){
         List<ToDoEntity> toDoEntities = toDoRepository.findAll();
         List<ToDoDTO> toDoDTOList = new ArrayList<>();
-        //Entitiy -> DAO 변환작업해주기!
+
+        //Entity -> DAO 변환작업해주기!
         for (ToDoEntity t : toDoEntities){
             toDoDTOList.add(ToDoDTO.toToDoDto(t));
         }
+
         return toDoDTOList;
+    }
+
+    public void save(ToDoDTO toDoDTO) {
+        ToDoEntity toDoEntity=ToDoEntity.toToDoEntity(toDoDTO);
+
+        toDoRepository.save(toDoEntity);
     }
 }
