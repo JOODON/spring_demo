@@ -38,8 +38,6 @@
       padding: 10px; /* 목록 내부 패딩 값 */
       border-radius: 8px;
     }
-
-
   </style>
 </head>
 <body>
@@ -56,12 +54,13 @@
     </div>
     <button type="button" class="btn btn-primary" onclick="commentWriter()">Add</button>
   </form>
-    <ul id="todo-list" class="list-group mt-3">
-      <li th:each="toDoDTO : ${toDoDTOList}">
-        <h3 th:text="${toDoDTO.getTodoTitle()}"></h3>
-        <span th:text="${toDoDTO.getTodoItem()}"></span>
-      </li>
-    </ul>
+  <ul id="todo-list" class="list-group mt-3">
+    <li th:each="toDoDTO : ${toDoDTOList}">
+      <h3 th:text="${toDoDTO.getTodoTitle()}"></h3>
+      <span th:text="${toDoDTO.getTodoItem()}"></span>
+      <button type="button" class="btn btn-danger btn-sm float-right" onclick="deleteItem(this)">Delete</button>
+    </li>
+  </ul>
 </div>
 </body>
 <script th:inline="javascript">
@@ -87,6 +86,7 @@
           let listItem = $("<li>").addClass("list-group-item");
           listItem.append("<h3>" + res[i].todoTitle + "</h3>");
           listItem.append("<span>" + res[i].todoItem + "</span>");
+          listItem.append('<button type="button" class="btn btn-danger btn-sm float-right" onclick="deleteItem(this)">Delete</button>');
           newTodoList.append(listItem); // 새로운 할 일 목록 추가
         }
 
@@ -98,6 +98,28 @@
       },
       error : function (res){
         console.log("요청 실패",res);
+      }
+    });
+  }
+
+  const deleteItem = (button) => {
+    const listItem = $(button).closest('li');
+
+    // Remove the list item from the DOM
+    listItem.remove();
+
+    // Make an AJAX request to delete the item from the server
+    $.ajax({
+      type: "post",
+      url: "/Todo/delete",
+      data: {
+        "id" : listItem.attr("id") // Assuming each list item has a unique ID attribute
+      },
+      success: function(res) {
+        console.log("삭제 성공", res);
+      },
+      error : function (res){
+        console.log("요청 실패", res);
       }
     });
   }
