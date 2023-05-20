@@ -58,13 +58,14 @@
     <li th:each="toDoDTO : ${toDoDTOList}">
       <h3 th:text="${toDoDTO.getTodoTitle()}"></h3>
       <span th:text="${toDoDTO.getTodoItem()}"></span>
-      <button type="button" class="btn btn-danger btn-sm float-right" onclick="deleteItem(this)">Delete</button>
+      <button type="button" class="btn btn-danger btn-sm float-right" th:value="${toDoDTO.getId()}" onclick="deleteItem(this)">Delete</button>
     </li>
   </ul>
 </div>
 </body>
 <script th:inline="javascript">
   const commentWriter = () => {
+
     const title = $("#todo-title").val();
     const todoItem = $("#todo-text").val();
 
@@ -86,7 +87,7 @@
           let listItem = $("<li>").addClass("list-group-item");
           listItem.append("<h3>" + res[i].todoTitle + "</h3>");
           listItem.append("<span>" + res[i].todoItem + "</span>");
-          listItem.append('<button type="button" class="btn btn-danger btn-sm float-right" onclick="deleteItem(this)">Delete</button>');
+          listItem.append('<button type="button" class="btn btn-danger btn-sm float-right" th:value="${toDoDTO.getId()}" onclick="deleteItem(this)">Delete</button>');
           newTodoList.append(listItem); // 새로운 할 일 목록 추가
         }
 
@@ -101,27 +102,32 @@
       }
     });
   }
-
   const deleteItem = (button) => {
-    const listItem = $(button).closest('li');
 
-    // Remove the list item from the DOM
+    const listItem = $(button).closest('li');
+    const listItemId = $(button).attr('value');
+
+    // DOM에서 해당 리스트 아이템을 제거합니다.
     listItem.remove();
 
-    // Make an AJAX request to delete the item from the server
+    // 서버로 아이템 삭제를 위한 AJAX 요청을 보냅니다.
     $.ajax({
-      type: "post",
-      url: "/Todo/delete",
+      type: 'post',
+      url: '/Todo/delete',
       data: {
-        "id" : listItem.attr("id") // Assuming each list item has a unique ID attribute
+        id: listItemId
       },
       success: function(res) {
-        console.log("삭제 성공", res);
+        console.log('삭제 성공', res);
       },
-      error : function (res){
-        console.log("요청 실패", res);
+      error: function(res) {
+        console.log('요청 실패', res);
       }
     });
-  }
+  };
+
+
+
+
 </script>
 </html>

@@ -34,4 +34,9 @@ public class ToDoService {
 
         toDoRepository.save(toDoEntity);
     }
+
+    public void deleteById(Long id) {
+
+        toDoRepository.deleteById(id);
+    }
 }

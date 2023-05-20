@@ -23,7 +23,6 @@ public class ToDoController {
     public String todoView(Model model){
         List<ToDoDTO> toDoDTOList= toDoService.toDoDTOList();
         model.addAttribute("toDoDTOList",toDoDTOList);
-
         return "ToDo/ToDoView";
     }
     @PostMapping("/write")
@@ -32,5 +31,11 @@ public class ToDoController {
         List<ToDoDTO> toDoDTOList= toDoService.toDoDTOList();
 
         return new ResponseEntity<>(toDoDTOList , HttpStatus.OK);
+    }
+    @PostMapping("/delete")
+    public String todoDelete(Long id){
+        toDoService.deleteById(id);
+
+        return "ToDo/ToDoView";
     }
 }
