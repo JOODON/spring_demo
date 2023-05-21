@@ -38,6 +38,14 @@
       padding: 10px; /* 목록 내부 패딩 값 */
       border-radius: 8px;
     }
+    @keyframes fadeOutAnimation {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .fade-out {
+      animation: fadeOutAnimation 0.8s forwards;
+    }
+
   </style>
 </head>
 <body>
@@ -87,7 +95,7 @@
           let listItem = $("<li>").addClass("list-group-item");
           listItem.append("<h3>" + res[i].todoTitle + "</h3>");
           listItem.append("<span>" + res[i].todoItem + "</span>");
-          listItem.append('<button type="button" class="btn btn-danger btn-sm float-right" th:value="${toDoDTO.getId()}" onclick="deleteItem(this)">Delete</button>');
+          listItem.append(`<button type="button" class="btn btn-danger btn-sm float-right" value="${res[i].id}" onclick="deleteItem(this)">Delete</button>`);
           newTodoList.append(listItem); // 새로운 할 일 목록 추가
         }
 
@@ -103,12 +111,16 @@
     });
   }
   const deleteItem = (button) => {
-
     const listItem = $(button).closest('li');
     const listItemId = $(button).attr('value');
 
-    // DOM에서 해당 리스트 아이템을 제거합니다.
-    listItem.remove();
+    // 요소에 fade-out 클래스 추가
+    listItem.addClass('fade-out');
+
+    // 삭제된 요소를 애니메이션이 완료된 후에 제거
+    setTimeout(function() {
+      listItem.remove();
+    }, 400);
 
     // 서버로 아이템 삭제를 위한 AJAX 요청을 보냅니다.
     $.ajax({
@@ -125,9 +137,5 @@
       }
     });
   };
-
-
-
-
 </script>
 </html>
