@@ -26,7 +26,7 @@ public class MemberController {
     @GetMapping("/new")
     public String memberForm(Model model){
 
-        model.addAttribute("memberDTO",new MemberFormDTO());
+        model.addAttribute("memberFormDTO",new MemberFormDTO());
 
         return "ToDo/member/signUpPage";
     }
@@ -34,14 +34,13 @@ public class MemberController {
     @PostMapping("/new")
     public String memberForm(@Valid MemberFormDTO memberFormDTO, BindingResult bindingResult , Model model){
         if (bindingResult.hasErrors()){
-            model.addAttribute("errorMessage","양식에 맞지 않는 부분이 있습니다. 확인해주세요");
             return "ToDo/member/signUpPage";
         }
         try {
             MemberEntity member = MemberEntity.createMember(memberFormDTO,passwordEncoder);
             memberService.saveMember(member);
         }catch (IllegalStateException e){
-            model.addAttribute("errorMessage","아이디 또는 비밀번호를 확인해주세요");
+            model.addAttribute("errorMessage",e.getMessage());
             return "ToDo/member/signUpPage";
         }
 
