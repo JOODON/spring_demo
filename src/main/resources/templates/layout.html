@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Header</title>
+    <style>
+        nav ul {
+            list-style-type: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+
+        nav li {
+            float: right;
+        }
+
+        nav li a {
+            display: block;
+            color: #333;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 18px; /* 글씨 크기 조정 */
+        }
+
+        nav li a:hover {
+            background-color: #ddd;
+        }
+
+        div span {
+            font-weight: bold;
+            float: right; /* 우측 정렬 */
+            font-size: 14px; /* 글씨 크기 조정 */
+            margin-right: 20px; /* 우측 여백 추가 */
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="/Todo">Todo</a></li>
+        <li><a href="/members/new">Sign Up</a></li>
+        <li><a href="/members/login">Login</a></li>
+    </ul>
+</nav>
+<div>
+    <span>Welcome, <span th:text="${currentUser}">Guest</span>!</span>
+</div>
+</body>
+</html>

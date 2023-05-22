@@ -1,6 +1,8 @@
 package spring_demo.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,4 +52,18 @@ public class MemberService implements UserDetailsService {
                 .build(); // User 객체 생성
     }
 
+    public static String getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 현재 로그인된 사용자의 정보를 가져옴
+        Object principal = authentication.getPrincipal();
+
+        // UserDetails 인터페이스를 구현한 사용자 정보를 가진 경우
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+
+        // UserDetails 인터페이스를 구현하지 않은 사용자 정보를 가진 경우
+        return principal.toString();
+    }
 }

@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import spring_demo.demo.dto.ToDoDTO;
+import spring_demo.demo.service.MemberService;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,8 +41,10 @@ public class ToDoEntity {
 
         toDoEntity.setTodoTitle(toDoDTO.getTodoTitle());
         toDoEntity.setTodoItem(toDoDTO.getTodoItem());
-        toDoEntity.setName("의문의 사나이");
+        toDoEntity.setName(MemberService.getCurrentUserId());
 
         return toDoEntity;
     }
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring_demo.demo.dto.BoardDTO;
 import spring_demo.demo.dto.ToDoDTO;
+import spring_demo.demo.service.MemberService;
 import spring_demo.demo.service.ToDoService;
 
 import javax.swing.plaf.PanelUI;
@@ -23,6 +24,7 @@ public class ToDoController {
     public String todoView(Model model){
         List<ToDoDTO> toDoDTOList= toDoService.toDoDTOList();
         model.addAttribute("toDoDTOList",toDoDTOList);
+        model.addAttribute("currentUser", MemberService.getCurrentUserId());
         return "ToDo/ToDoView";
     }
     @PostMapping("/write")

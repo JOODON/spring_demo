@@ -25,5 +25,6 @@ public class MemberFormDTO {
     @NotEmpty(message = "비밀번호는 필수 입력 값 입니다.")
     private String password;
 
+    @NotEmpty(message = "주소는 필수 입력 값 입니다.")
     private String address;
 }

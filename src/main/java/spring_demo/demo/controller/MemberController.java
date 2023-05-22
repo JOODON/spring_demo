@@ -27,7 +27,7 @@ public class MemberController {
     public String memberForm(Model model){
 
         model.addAttribute("memberFormDTO",new MemberFormDTO());
-
+        model.addAttribute("currentUser", MemberService.getCurrentUserId());
         return "ToDo/member/signUpPage";
     }
 
@@ -48,7 +48,9 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginMember(){
+    public String loginMember(Model model){
+        model.addAttribute("currentUser", MemberService.getCurrentUserId());
+
         return "ToDo/member/loginPage";
     }
 
