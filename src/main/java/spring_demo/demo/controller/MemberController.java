@@ -34,7 +34,7 @@ public class MemberController {
     @PostMapping("/new")
     public String memberForm(@Valid MemberFormDTO memberFormDTO, BindingResult bindingResult , Model model){
         if (bindingResult.hasErrors()){
-            model.addAttribute("errorMessage","양식에 맞지 않는 부분이 있습니다.ㅎ 확인해주세요");
+            model.addAttribute("errorMessage","양식에 맞지 않는 부분이 있습니다. 확인해주세요");
             return "ToDo/member/signUpPage";
         }
         try {
@@ -46,5 +46,17 @@ public class MemberController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginMember(){
+        return "ToDo/member/loginPage";
+    }
+
+    @GetMapping("/login/error")
+    public String loginError(Model model){
+        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 화인해주세요");
+
+        return "ToDo/member/loginPage";
     }
 }
