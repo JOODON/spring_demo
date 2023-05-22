@@ -3,17 +3,13 @@ package spring_demo.demo.entity;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import spring_demo.demo.dto.ToDoDTO;
 import spring_demo.demo.service.MemberService;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+//회원은 1명 게시글은 여러개 회원 객체에서는 oneTwoMany
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,7 +26,12 @@ public class ToDoEntity {
     @NotNull
     private String todoItem;
 
+
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private MemberEntity member;
 
     public ToDoEntity() {
 
@@ -45,6 +46,4 @@ public class ToDoEntity {
 
         return toDoEntity;
     }
-
-
 }

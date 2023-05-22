@@ -21,19 +21,23 @@ import java.util.Map;
 public class ToDoController {
     private final ToDoService toDoService;
     @GetMapping
-    public String todoView(Model model){
-        List<ToDoDTO> toDoDTOList= toDoService.toDoDTOList();
-        model.addAttribute("toDoDTOList",toDoDTOList);
+    public String todoView(Model model) {
+        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOList();
+
+        model.addAttribute("toDoDTOList", toDoDTOList);
+
         model.addAttribute("currentUser", MemberService.getCurrentUserId());
+
         return "ToDo/ToDoView";
     }
-    @PostMapping("/write")
-    public ResponseEntity  todoWrite(@ModelAttribute ToDoDTO toDoDTO){
-        toDoService.save(toDoDTO);
-        List<ToDoDTO> toDoDTOList= toDoService.toDoDTOList();
 
-        return new ResponseEntity<>(toDoDTOList , HttpStatus.OK);
+    @PostMapping("/write")
+    public ResponseEntity<List<ToDoDTO>> todoWrite(@ModelAttribute ToDoDTO toDoDTO) {
+        toDoService.save(toDoDTO);
+        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOList();
+        return new ResponseEntity<>(toDoDTOList, HttpStatus.OK);
     }
+
     @PostMapping("/delete")
     public String todoDelete(Long id){
         toDoService.deleteById(id);
