@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import spring_demo.demo.config.SecurityUtils;
 import spring_demo.demo.dto.MemberFormDTO;
 import spring_demo.demo.entity.MemberEntity;
 import spring_demo.demo.service.MemberService;
@@ -27,7 +28,7 @@ public class MemberController {
     public String memberForm(Model model){
 
         model.addAttribute("memberFormDTO",new MemberFormDTO());
-        model.addAttribute("currentUser", MemberService.getCurrentUserId());
+        model.addAttribute("currentUser", SecurityUtils.getCurrentUserId());
         return "ToDo/member/signUpPage";
     }
 
@@ -44,12 +45,12 @@ public class MemberController {
             return "ToDo/member/signUpPage";
         }
 
-        return "redirect:/";
+        return "redirect:/members/login";
     }
 
     @GetMapping("/login")
     public String loginMember(Model model){
-        model.addAttribute("currentUser", MemberService.getCurrentUserId());
+        model.addAttribute("currentUser", SecurityUtils.getCurrentUserId());
 
         return "ToDo/member/loginPage";
     }

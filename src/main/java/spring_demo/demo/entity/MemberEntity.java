@@ -9,12 +9,15 @@ import spring_demo.demo.dto.MemberFormDTO;
 
 import javax.persistence.*;
 import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "MEMBER")
 @Data
 @ToString
 public class MemberEntity {
+
     @Id
     @Column(name = "MEMBER_ID")
     @GeneratedValue
@@ -32,6 +35,9 @@ public class MemberEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ToDoEntity> todos = new ArrayList<>();
+
     public static MemberEntity createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
         MemberEntity member = new MemberEntity();
 
@@ -44,4 +50,6 @@ public class MemberEntity {
 
         return member;
     }
+
+
 }

@@ -3,10 +3,13 @@ package spring_demo.demo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import spring_demo.demo.entity.ToDoEntity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +30,6 @@ public class MemberFormDTO {
 
     @NotEmpty(message = "주소는 필수 입력 값 입니다.")
     private String address;
+
+    private List<ToDoEntity> todos = new ArrayList<>();
 }

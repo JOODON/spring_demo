@@ -5,4 +5,6 @@ import spring_demo.demo.entity.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity,Long> {
     MemberEntity findByEmail(String email);
+
+    MemberEntity findByName (String name);
 }

@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import spring_demo.demo.config.SecurityUtils;
 import spring_demo.demo.dto.ToDoDTO;
 import spring_demo.demo.service.MemberService;
 
@@ -26,24 +27,28 @@ public class ToDoEntity {
     @NotNull
     private String todoItem;
 
-
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity member;
+
 
     public ToDoEntity() {
 
     }
 
-    public static ToDoEntity toToDoEntity(ToDoDTO toDoDTO) {
+    public static ToDoEntity toToDoEntity(ToDoDTO toDoDTO,MemberEntity member) {
         ToDoEntity toDoEntity = new ToDoEntity();
+
 
         toDoEntity.setTodoTitle(toDoDTO.getTodoTitle());
         toDoEntity.setTodoItem(toDoDTO.getTodoItem());
-        toDoEntity.setName(MemberService.getCurrentUserId());
+        toDoEntity.setName(SecurityUtils.getCurrentUserId());
+
+        toDoEntity.setMember(member);
 
         return toDoEntity;
     }
+
 }

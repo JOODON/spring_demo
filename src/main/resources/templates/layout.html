@@ -38,8 +38,9 @@
 <nav>
     <ul>
         <li><a href="/Todo">Todo</a></li>
-        <li><a href="/members/new">Sign Up</a></li>
-        <li><a href="/members/login">Login</a></li>
+        <li th:if="${currentUser == null || currentUser == 'anonymousUser'}"><a href="/members/new">Sign Up</a></li>
+        <li th:if="${currentUser == null || currentUser == 'anonymousUser'}"><a href="/members/login">Login</a></li>
+        <li th:if="${currentUser != null && currentUser != 'anonymousUser'}"><a href="/members/logout">Logout</a></li>
     </ul>
 </nav>
 <div>

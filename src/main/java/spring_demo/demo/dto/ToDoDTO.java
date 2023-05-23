@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import spring_demo.demo.entity.MemberEntity;
 import spring_demo.demo.entity.ToDoEntity;
 
 @Getter
@@ -19,6 +20,8 @@ public class ToDoDTO {
     private String todoItem;
 
     private String name;
+
+    private MemberEntity member;
 
     public static ToDoDTO toToDoDto(ToDoEntity t) {
         ToDoDTO toDoDTO = new ToDoDTO();

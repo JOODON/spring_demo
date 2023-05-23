@@ -65,7 +65,7 @@
     <ul id="todo-list" class="list-group mt-3">
       <li th:each="toDoDTO : ${toDoDTOList}">
         <h3 th:text="${toDoDTO.getTodoTitle()}"></h3>
-        <span th:text="${toDoDTO.getTodoItem()}"></span>
+        <h5 th:text="${toDoDTO.getTodoItem()}"></h5>
         <button type="button" class="btn btn-danger btn-sm float-right" th:value="${toDoDTO.getId()}" onclick="deleteItem(this)">Delete</button>
       </li>
     </ul>
@@ -100,7 +100,7 @@
         for (let i in res) {
           let listItem = $("<li>").addClass("list-group-item");
           listItem.append("<h3>" + res[i].todoTitle + "</h3>");
-          listItem.append("<span>" + res[i].todoItem + "</span>");
+          listItem.append("<h5>" + res[i].todoItem + "</h5>");
           listItem.append(`<button type="button" class="btn btn-danger btn-sm float-right" value="${res[i].id}" onclick="deleteItem(this)">Delete</button>`);
           newTodoList.append(listItem); // 새로운 할 일 목록 추가
         }

@@ -12,6 +12,7 @@ import spring_demo.demo.entity.MemberEntity;
 import spring_demo.demo.repository.MemberRepository;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.Member;
 
 @Service
 @Transactional
@@ -23,9 +24,15 @@ public class MemberService implements UserDetailsService {
         validateDuplicateMember(member);
         return memberRepository.save(member);
     }
+    public MemberEntity findByMember(String name){
+        MemberEntity member = memberRepository.findByName(name);
+
+        return member;
+    }
+
 
     public void validateDuplicateMember(MemberEntity member){
-        System.out.println(member.getName());
+
         MemberEntity findMember = memberRepository.findByEmail(member.getEmail());
 
         if (findMember != null)
@@ -50,20 +57,5 @@ public class MemberService implements UserDetailsService {
                 .password(member.getPassword()) // 비밀번호 설정
                 .roles(member.getRole().toString()) // 역할(롤) 설정
                 .build(); // User 객체 생성
-    }
-
-    public static String getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // 현재 로그인된 사용자의 정보를 가져옴
-        Object principal = authentication.getPrincipal();
-
-        // UserDetails 인터페이스를 구현한 사용자 정보를 가진 경우
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        }
-
-        // UserDetails 인터페이스를 구현하지 않은 사용자 정보를 가진 경우
-        return principal.toString();
     }
 }
