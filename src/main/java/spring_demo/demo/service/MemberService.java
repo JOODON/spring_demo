@@ -1,8 +1,6 @@
 package spring_demo.demo.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,15 +8,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import spring_demo.demo.entity.MemberEntity;
 import spring_demo.demo.repository.MemberRepository;
-
+import spring_demo.demo.repository.ToDoRepository;
 import javax.transaction.Transactional;
-import java.lang.reflect.Member;
+
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+
+    private final ToDoRepository toDoRepository;
 
     public MemberEntity saveMember(MemberEntity member){
         validateDuplicateMember(member);
@@ -29,8 +29,6 @@ public class MemberService implements UserDetailsService {
 
         return member;
     }
-
-
     public void validateDuplicateMember(MemberEntity member){
 
         MemberEntity findMember = memberRepository.findByEmail(member.getEmail());
@@ -58,4 +56,6 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString()) // 역할(롤) 설정
                 .build(); // User 객체 생성
     }
+
+
 }

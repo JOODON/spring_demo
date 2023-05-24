@@ -16,6 +16,7 @@ import spring_demo.demo.service.MemberService;
 import spring_demo.demo.service.ToDoService;
 
 import javax.swing.plaf.PanelUI;
+import java.lang.ref.PhantomReference;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +25,13 @@ import java.util.Map;
 @RequestMapping("/Todo")
 public class ToDoController {
     private final ToDoService toDoService;
+
+    private final MemberService memberService;
     @GetMapping
     public String todoView(Model model) {
+        MemberEntity member= memberService.findByMember(SecurityUtils.getCurrentUserId());
 
-        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOList();
+        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOListByMemberId(member.getId());
 
         model.addAttribute("toDoDTOList", toDoDTOList);
 
@@ -39,7 +43,11 @@ public class ToDoController {
     @PostMapping("/write")
     public ResponseEntity<List<ToDoDTO>> todoWrite(@ModelAttribute ToDoDTO toDoDTO) {
         toDoService.save(toDoDTO);
-        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOList();
+
+        MemberEntity member= memberService.findByMember(SecurityUtils.getCurrentUserId());
+
+        List<ToDoDTO> toDoDTOList = toDoService.toDoDTOListByMemberId(member.getId());
+
         return new ResponseEntity<>(toDoDTOList, HttpStatus.OK);
     }
 

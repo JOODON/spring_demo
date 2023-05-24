@@ -3,6 +3,7 @@ package spring_demo.demo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import spring_demo.demo.entity.MemberEntity;
 import spring_demo.demo.entity.ToDoEntity;
 
 import javax.validation.constraints.Email;
@@ -32,4 +33,16 @@ public class MemberFormDTO {
     private String address;
 
     private List<ToDoEntity> todos = new ArrayList<>();
+
+    public static MemberFormDTO toMemberDto(MemberEntity member){
+        MemberFormDTO memberFormDTO = new MemberFormDTO();
+
+        memberFormDTO.setId(member.getId());
+        memberFormDTO.setName(member.getName());
+        memberFormDTO.setEmail(member.getEmail());
+        memberFormDTO.setPassword(member.getPassword());
+        memberFormDTO.setAddress(member.getAddress());
+
+        return memberFormDTO;
+    }
 }

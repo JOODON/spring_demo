@@ -21,7 +21,19 @@ public class ToDoDTO {
 
     private String name;
 
-    private MemberEntity member;
+    private Long member_id;
+
+    public static ToDoDTO toToDoDto(ToDoEntity t,Long memberId) {
+        ToDoDTO toDoDTO = new ToDoDTO();
+
+        toDoDTO.setId(t.getId());
+        toDoDTO.setTodoTitle(t.getTodoTitle());
+        toDoDTO.setTodoItem(t.getTodoItem());
+        toDoDTO.setName(t.getName());
+        toDoDTO.setMember_id(memberId);
+
+        return toDoDTO;
+    }
 
     public static ToDoDTO toToDoDto(ToDoEntity t) {
         ToDoDTO toDoDTO = new ToDoDTO();
