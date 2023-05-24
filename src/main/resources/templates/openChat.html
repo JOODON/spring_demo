@@ -11,38 +11,86 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f2f2f2;
+      background-color: #F8F9FA;
     }
 
     #chat-container {
       background-color: #ffffff;
-      border: 1px solid #ccc;
+      border: 1px solid #dfe0e1;
       border-radius: 5px;
       padding: 20px;
       width: 400px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
     #message-container {
       height: 300px;
       overflow-y: auto;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #dfe0e1;
       padding: 10px;
+    }
+
+    .chat-message {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .chat-content {
+      background-color: #DCF8C6;
+      color: #000000;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .chat-details {
+      font-size: 12px;
+      color: #8C8C8C;
+      margin-top: 4px;
+    }
+
+    .chat-message.right-align {
+      align-items: flex-end;
+    }
+
+    .chat-content.right-align {
+      background-color: #E8F0FD;
+      color: #000000;
+    }
+
+    .chat-details.right-align {
+      text-align: right;
     }
 
     #input-container {
       display: flex;
       align-items: center;
+      margin-top: 10px;
     }
 
     #message-input {
       flex-grow: 1;
-      padding: 5px;
+      padding: 8px 12px;
+      border: 1px solid #dfe0e1;
+      border-radius: 20px;
+      font-size: 14px;
     }
 
     #send-button {
       margin-left: 10px;
-      padding: 5px 10px;
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
     }
 
   </style>
@@ -50,7 +98,13 @@
 <body>
 <div id="chat-container">
   <div id="message-container">
-    <!-- 메시지가 표시될 영역 -->
+    <div class="chat-message right-align" th:each="chatDTO : ${chatDTOS}">
+      <div class="chat-content" th:text="${chatDTO.getChatContent()}" >메시지 내용</div>
+      <div class="chat-details" >
+        <span th:text="${chatDTO.getChatName()}">작성자</span>
+        <span th:text="${chatDTO.getChatTime()}" >시간</span>
+      </div>
+    </div>
   </div>
   <div id="input-container">
     <input type="text" id="message-input" placeholder="메시지를 입력하세요">

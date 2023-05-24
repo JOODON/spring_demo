@@ -18,13 +18,12 @@ import javax.transaction.Transactional;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
-    private final ToDoRepository toDoRepository;
-
     public MemberEntity saveMember(MemberEntity member){
         validateDuplicateMember(member);
         return memberRepository.save(member);
     }
     public MemberEntity findByMember(String name){
+
         MemberEntity member = memberRepository.findByName(name);
 
         return member;
