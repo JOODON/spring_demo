@@ -27,5 +27,10 @@ public class ChatService {
         return chatDTOS;
     }
 
+    public void chatSave(ChatDTO chatDTO){
+        ChatEntity chat = ChatEntity.toChatEntity(chatDTO);
+
+        chatRepository.save(chat);
+    }
 
 }
