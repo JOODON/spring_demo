@@ -35,7 +35,7 @@ public class MemberEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ToDoEntity> todos = new ArrayList<>();
 
     public static MemberEntity createMember(MemberFormDTO memberFormDTO, PasswordEncoder passwordEncoder){
@@ -50,6 +50,5 @@ public class MemberEntity {
 
         return member;
     }
-
 
 }

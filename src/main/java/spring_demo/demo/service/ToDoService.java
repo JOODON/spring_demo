@@ -38,18 +38,18 @@ public class ToDoService {
     }
 
 
-    public List<ToDoDTO> toDoDTOList(){
-        //전체를 출력해주는 List
-        List<ToDoEntity> toDoEntities = toDoRepository.findAll();
-        List<ToDoDTO> toDoDTOList = new ArrayList<>();
-
-        //Entity -> DAO 변환작업해주기!
-        for (ToDoEntity t : toDoEntities){
-            toDoDTOList.add(ToDoDTO.toToDoDto(t));
-        }
-
-        return toDoDTOList;
-    }
+//    public List<ToDoDTO> toDoDTOList(){
+//        //전체를 출력해주는 List
+//        List<ToDoEntity> toDoEntities = toDoRepository.findAll();
+//        List<ToDoDTO> toDoDTOList = new ArrayList<>();
+//
+//        //Entity -> DAO 변환작업해주기!
+//        for (ToDoEntity t : toDoEntities){
+//            toDoDTOList.add(ToDoDTO.toToDoDto(t));
+//        }
+//
+//        return toDoDTOList;
+//    }
 
     public List<ToDoDTO> toDoDTOListByMemberId(Long id) {
         //MEMBER_ID 값을 매개변수로 받아서 출력해주는 메소드

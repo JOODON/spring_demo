@@ -32,13 +32,27 @@ public class ToDoEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity member;
-
+    //하나의 회원에는 여러가지 ToDo가 들어갈수 있으므로 위와같이 설정
 
     public ToDoEntity() {
 
     }
 
-    public static ToDoEntity toToDoEntity(ToDoDTO toDoDTO,MemberEntity member) {
+    public void setMember(MemberEntity member) {
+        if (this.member != null) {
+            this.member.getTodos().remove(this);
+        }
+
+        this.member = member;
+
+        // 컬렉션 초기화
+        member.getTodos().size();
+
+        member.getTodos().add(this);
+    }
+
+
+    public static ToDoEntity toToDoEntity(ToDoDTO toDoDTO, MemberEntity member) {
         ToDoEntity toDoEntity = new ToDoEntity();
 
 
@@ -47,6 +61,7 @@ public class ToDoEntity {
         toDoEntity.setName(SecurityUtils.getCurrentUserId());
 
         toDoEntity.setMember(member);
+        //연관관계 설정 부분
 
         return toDoEntity;
     }
